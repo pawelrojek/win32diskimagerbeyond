@@ -1,6 +1,5 @@
 ## Image Writer for Microsoft Windows ##
 Release 1.0.1 Beyond [2019-08-15]
-Based on: https://sourceforge.net/projects/win32diskimager/
 
 This fork (based on 1.0.0) adds ignored_drives.cfg config file to skip/ignore/blacklist drives.
 
