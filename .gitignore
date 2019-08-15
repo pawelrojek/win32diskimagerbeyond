@@ -1,0 +1,9 @@
+Debug/
+Release/
+build-*/
+*.exe
+*.pro.user*
+*dll
+*qm
+*log
+debug.log

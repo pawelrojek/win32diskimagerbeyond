@@ -1,0 +1,9 @@
+2.0 Work list:
+
+
+Bug fixes:
+    Drag & Drop in Windows 7
+
+Features:
+    Compression support
+    Reformat device
