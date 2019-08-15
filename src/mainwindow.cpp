@@ -44,8 +44,10 @@ MainWindow* MainWindow::instance = NULL;
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
     setupUi(this);
+    this->setWindowTitle(this->windowTitle() + " Beyond"); // Beyond MOD :)
     elapsed_timer = new ElapsedTimer();
     statusbar->addPermanentWidget(elapsed_timer);   // "addpermanent" puts it on the RHS of the statusbar
+    loadDriveIgnoreList();
     getLogicalDrives();
     status = STATUS_IDLE;
     progressbar->reset();
@@ -1107,9 +1109,12 @@ void MainWindow::getLogicalDrives()
             // we've shifted
             char drivename[] = "\\\\.\\A:\\";
             drivename[4] += i;
-            if (checkDriveType(drivename, &pID))
+            if (!isDriveIgnored(drivename[4]))
             {
-                cboxDevice->addItem(QString("[%1:\\]").arg(drivename[4]), (qulonglong)pID);
+                if (checkDriveType(drivename, &pID))
+                {
+                    cboxDevice->addItem(QString("[%1:\\]").arg(drivename[4]), (qulonglong)pID);
+                }
             }
         }
         driveMask >>= 1;
@@ -1162,11 +1167,14 @@ bool MainWindow::nativeEvent(const QByteArray &type, void *vMsg, long *result)
                         ULONG pID;
                         char longname[] = "\\\\.\\A:\\";
                         longname[4] = ALET;
-                        // checkDriveType gets the physicalID
-                        if (checkDriveType(longname, &pID))
+                        if (!isDriveIgnored(longname[4]))
                         {
-                            cboxDevice->addItem(qs, (qulonglong)pID);
-                            setReadWriteButtonState();
+                            // checkDriveType gets the physicalID
+                            if (checkDriveType(longname, &pID))
+                            {
+                                cboxDevice->addItem(qs, (qulonglong)pID);
+                                setReadWriteButtonState();
+                            }
                         }
                     }
                 }

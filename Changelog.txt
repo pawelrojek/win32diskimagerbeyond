@@ -1,3 +1,9 @@
+Release 1.0.1 Beyond
+=============
+Added ignored_drives.cfg config file to skip/ignore/blacklist drives (subst, virtual, network)
+[Workaround for bugs #41 and #47]
+
+
 Release 1.0.0
 =============
 Add Verify Image function
@@ -23,6 +29,7 @@ SF: 35 - Mismatch between allocating and deleting memory buffer
 SF: 39 - Miswrote to SSD
 SF: 40 - Disk Imager scans whole %USERPROFILE% on start
 SF: 45 - Translation files adustment
+
 
 Release 0.9.5
 =============

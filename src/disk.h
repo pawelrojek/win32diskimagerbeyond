@@ -60,4 +60,10 @@ unsigned long long getFileSizeInSectors(HANDLE handle, unsigned long long sector
 bool spaceAvailable(char *location, unsigned long long spaceneeded);
 bool checkDriveType(char *name, ULONG *pid);
 
+void DebugToFile(QString txt); //helper function saves string to debug.log
+
+void loadDriveIgnoreList();
+bool isDriveIgnored(char drive);
+static QString ignoredDrives;
+
 #endif // DISK_H

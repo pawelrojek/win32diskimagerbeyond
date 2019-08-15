@@ -16,6 +16,8 @@
 #  Copyright (C) 2009, Justin Davis <tuxdavis@gmail.com>
 #  Copyright (C) 2009-2017 ImageWriter developers
 #                 https://sourceforge.net/projects/win32diskimager/
+#  Copyright (C) 2019, Pawel Rojek (the "Beyond" mod)
+#                 <pawel@pawelrojek.com>
 ###################################################################
 TEMPLATE = app
 TARGET = ../../Win32DiskImager
@@ -24,14 +26,14 @@ INCLUDEPATH += .
 #CONFIG += release
 DEFINES -= UNICODE
 QT += widgets
-VERSION = 1.0
+VERSION = 1.0.1
 VERSTR = '\\"$${VERSION}\\"'
 DEFINES += VER=\"$${VERSTR}\"
 DEFINES += WINVER=0x0601
 DEFINES += _WIN32_WINNT=0x0601
 QMAKE_TARGET_PRODUCT = "Win32 Image Writer"
 QMAKE_TARGET_DESCRIPTION = "Image Writer for Windows to write USB and SD images"
-QMAKE_TARGET_COPYRIGHT = "Copyright (C) 2009-2017 Windows ImageWriter Team"
+QMAKE_TARGET_COPYRIGHT = "Copyright (C) 2009-2019 Windows ImageWriter Team"
 
 # Input
 HEADERS += disk.h\

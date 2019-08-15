@@ -64,6 +64,18 @@ DWORD getDeviceID(HANDLE hVolume)
     return sd.Extents[0].DiskNumber;
 }
 
+void DebugToFile(QString txt)
+{
+    QString appDir = qApp->applicationDirPath() + "\\";
+    QFile f(appDir + "debug.log");
+    if (f.open(QIODevice::WriteOnly | QIODevice::Append))
+    {
+        QTextStream stream(&f);
+        stream << txt << endl;
+    }
+}
+
+
 HANDLE getHandleOnDevice(int device, DWORD access)
 {
     HANDLE hDevice;
@@ -308,6 +320,8 @@ QString getDriveLabel(const char *drv)
     return(retVal);
 }
 
+
+
 BOOL GetDisksProperty(HANDLE hDevice, PSTORAGE_DEVICE_DESCRIPTOR pDevDesc,
                       DEVICE_NUMBER *devInfo)
 {
@@ -440,6 +454,7 @@ bool checkDriveType(char *name, ULONG *pid)
     switch( driveType )
     {
     case DRIVE_REMOVABLE: // The media can be removed from the drive.
+      //or Virtual [e.g. PCloud] [TODO]
     case DRIVE_FIXED:     // The media cannot be removed from the drive. Some USB drives report as this.
         hDevice = CreateFile(nameNoSlash, FILE_READ_ATTRIBUTES, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING, 0, NULL);
         if (hDevice == INVALID_HANDLE_VALUE)
@@ -499,4 +514,53 @@ bool checkDriveType(char *name, ULONG *pid)
     free(nameNoSlash);
 
     return(retVal);
+}
+
+bool isDriveVirtual(QString drive)
+{
+    //[todo] placeholder to fix some bugs the other way
+    return false;
+}
+
+bool isDriveIgnored(char drive)
+{
+    // DebugToFile(QString("Comparing %1").arg(drive));
+    if (ignoredDrives.indexOf(drive) > -1) return true;
+    return false;
+}
+
+void loadDriveIgnoreList()
+{
+    ignoredDrives = "";
+    /*
+    [todo] add more paths to look for the config file
+           or this could also be moved to the registry
+           but it will be harder to edit
+           so I'm sticking with config file for now
+    */
+    QString appDir = qApp->applicationDirPath() + "\\";
+    QString fileName = appDir + "ignored_drives.cfg";
+
+    if (!QFileInfo(fileName).exists()) return;
+
+    QFile inputFile(fileName);
+    if (inputFile.open(QIODevice::ReadOnly))
+    {
+       QTextStream in(&inputFile);
+       while (!in.atEnd())
+       {
+          QString line = in.readLine();
+          line = line.trimmed();
+          if (line=="") continue; //empty line
+          QString firstChar = line.left(1);
+          if ( (firstChar=="#") || (firstChar==";") ) continue; //comments
+
+          if (firstChar.at(0).isLetter()) //otherwise it's probably a drive letter
+          {
+               ignoredDrives += firstChar.toUpper(); //duplicates aren't important
+          }
+       }
+       inputFile.close();
+    }
+    // DebugToFile("Drive ignore list: " + ignoredDrives);
 }
