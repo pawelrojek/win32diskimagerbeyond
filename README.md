@@ -9,7 +9,7 @@ See ignored_drives.cfg for details.
 
 
 ## Download ##
-Current binary: [zip](https://github.com/pawelrojek/win32diskimagerbeyond/releases/download/1.0.1/Win32DiskImagerBeyond-1.0.1.zip)
+Current binary: [download here](https://github.com/pawelrojek/win32diskimagerbeyond/releases/download/1.0.1/Win32DiskImagerBeyond-1.0.1.zip)
 
 
 
