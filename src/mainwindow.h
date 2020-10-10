@@ -46,7 +46,7 @@ class MainWindow : public QMainWindow, public Ui::MainWindow
         ~MainWindow();
         void closeEvent(QCloseEvent *event);
         enum Status {STATUS_IDLE=0, STATUS_READING, STATUS_WRITING, STATUS_VERIFYING, STATUS_EXIT, STATUS_CANCELED};
-        bool nativeEvent(const QByteArray &type, void *vMsg, long *result);
+        bool nativeEvent(const QByteArray &type, void *vMsg, long *result) Q_DECL_OVERRIDE;
     protected slots:
         void on_tbBrowse_clicked();
         void on_bCancel_clicked();
